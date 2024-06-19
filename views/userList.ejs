@@ -2,6 +2,10 @@
 <main>
   <div class="fade-in">
     <h1>User List</h1>
+    <form action="/users/search" method="GET">
+      <input type="text" name="search" id="search" placeholder="Search by name">
+      <button type="submit">Search</button>
+    </form>
     <table>
       <thead>
         <tr>
