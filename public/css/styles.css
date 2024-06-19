@@ -9,8 +9,8 @@ body {
 
 /* Sidebar */
 .sidebar {
-  background-color: #333;
-  color: #fff;
+  background-color: #95D2B3;
+  color: black;
   width: 30vw;
   padding: 20px;
   height: 100vh;
@@ -27,13 +27,13 @@ body {
 }
 
 .sidebar a {
-  color: #fff;
+  color: black;
   text-decoration: none;
 }
 
 /* Header */
 header {
-  background-color: #fff;
+  background-color: #D8EFD3;
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -51,16 +51,16 @@ header {
 main {
   flex: 1;
   padding: 20px;
-  background-color: #f5f5f5;
+  background-color: #D8EFD3;
   width: 90vw;
-  height: 100vh;
+  height: 100%;
 }
 
 /* Table Styles */
 table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff;
+  background-color: #F1F8E8;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -70,7 +70,7 @@ th, td {
 }
 
 th {
-  background-color: #333;
+  background-color: #55AD9B;
   color: #fff;
 }
 
