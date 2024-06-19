@@ -1,24 +1,63 @@
-const User = require('../models/User');
-const nodemailer = require('nodemailer');
-const emailConfig = require('../config/emailConfig');
+const User = require("../models/User");
+const nodemailer = require("nodemailer");
+const emailConfig = require("../config/emailConfig");
 
 // Nodemailer setup
 const transporter = nodemailer.createTransport(emailConfig);
+
+// exports.queryrecord=async(req,res)=>{
+//   const id=req.params.id
+//   const filepath=req.file.path
+//   const{emailto,emailfrom,subject,body,attachment}=req.body
+//   let transporter = nodemailer.createTransport({
+//       host: "smtp.gmail.com",
+//       port: 587,
+//       secure: false, // true for 465, false for other ports
+//       auth: {
+//         user: 'pks637700@gmail.com', // generated ethereal user
+//         pass: 'zllgtmaiotxmsesd', // generated ethereal password
+//       },
+//     });
+//     console.log('connected to SMTP server')
+    
+//     let info = await transporter.sendMail({
+//       from:emailfrom, // sender address
+//       to:emailto, // list of receivers
+//       subject:subject, // Subject line
+//       text:body, // plain text body
+//       //html: "<b>Hello world?</b>", // html body
+//       attachment:[{path:filepath}]
+//     });
+//     console.log('email sent')
+//     await Query.findByIdAndUpdate(id,{status:'Replyed'})
+//     res.redirect('/admin/querymanage')
+  
+// }
+
+//GET
+exports.getDash = async (req, res) => {
+  try {
+    // const chats = await Chat.find();
+    res.render("dashboard.ejs");
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 // GET /users/list
 exports.getUserList = async (req, res) => {
   try {
     const users = await User.find();
-    res.render('userList', { users });
+    res.render("userList", { users });
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 };
 
 // GET /users/add
 exports.renderAddUserForm = (req, res) => {
-  res.render('addUser');
+  res.render("addUser");
 };
 
 // POST /users/add
@@ -32,7 +71,7 @@ exports.addUser = async (req, res) => {
     const mailOptions = {
       from: emailConfig.from,
       to: email,
-      subject: 'New User Added',
+      subject: "New User Added",
       text: `A new user has been added:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}`,
     };
 
@@ -44,10 +83,10 @@ exports.addUser = async (req, res) => {
       }
     });
 
-    res.redirect('/users/list');
+    res.redirect("/users/list");
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 };
 
@@ -55,10 +94,10 @@ exports.addUser = async (req, res) => {
 exports.renderEditUserForm = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    res.render('editUser', { user });
+    res.render("editUser", { user });
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 };
 
@@ -76,7 +115,7 @@ exports.updateUser = async (req, res) => {
     const mailOptions = {
       from: emailConfig.from,
       to: email,
-      subject: 'User Information Updated',
+      subject: "User Information Updated",
       text: `Your user information has been updated:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}`,
     };
 
@@ -88,10 +127,10 @@ exports.updateUser = async (req, res) => {
       }
     });
 
-    res.redirect('/users/list');
+    res.redirect("/users/list");
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 };
 
@@ -104,7 +143,7 @@ exports.deleteUser = async (req, res) => {
     const mailOptions = {
       from: emailConfig.from,
       to: user.email,
-      subject: 'User Deleted',
+      subject: "User Deleted",
       text: `Your user account has been deleted:\n\nName: ${user.name}\nEmail: ${user.email}\nPhone: ${user.phone}`,
     };
 
@@ -116,9 +155,9 @@ exports.deleteUser = async (req, res) => {
       }
     });
 
-    res.redirect('/users/list');
+    res.redirect("/users/list");
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 };

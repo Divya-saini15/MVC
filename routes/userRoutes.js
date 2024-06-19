@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 
+
+// GET 
+router.get('/', userController.getDash);
+
 // GET /users/list
 router.get('/list', userController.getUserList);
 
