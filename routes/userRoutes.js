@@ -6,7 +6,6 @@ const userController = require("../controllers/userController");
 router.get("/", userController.getDash);
 
 // GET /users/list
-
 router.get("/list", userController.getUserList);
 
 // GET /users/add
