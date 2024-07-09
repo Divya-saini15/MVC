@@ -21,13 +21,15 @@ exports.login = async (req, res) => {
     }
 
     //check the jwt key 
-    if (!jwtSecret) {
-      console.error('JWT_SECRET environment variable not set');
-      process.exit(1);
-  }
+  //   if (!jwtSecret) {
+  //     console.error('JWT_SECRET environment variable not set');
+  //     process.exit(1);
+  // }
 
-  const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '1h' });
-  res.json({ token });
+  // const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '1h' });
+  // res.json({ token });
+
+  res.json({ message: 'Login successful' });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
