@@ -23,7 +23,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Import and use routes
 const userRoutes = require('./routes/userRoutes');
+const authRoutes = require ('./routes/authRoutes')
 app.use('/users', userRoutes);
+app.use('/auth', authRoutes);
+
 
 // Start the server
 const PORT = process.env.PORT || 3000;

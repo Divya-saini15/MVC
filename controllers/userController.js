@@ -136,6 +136,7 @@ exports.updateUser = async (req, res) => {
 // GET /users/delete/:id
 exports.deleteUser = async (req, res) => {
   try {
+    
     const user = await User.findByIdAndDelete(req.params.id);
 
     // Send email notification
@@ -143,7 +144,7 @@ exports.deleteUser = async (req, res) => {
       from: emailConfig.from,
       to: user.email,
       subject: "User Deleted",
-      text: `Your user account has been deleted:\n\nName: ${user.name}\nEmail: ${user.email}\nPhone: ${user.phone}`,
+      text: `Your user account has been deleted:\n\nName: ${user.name}\nEmail: ${user.email}\nPhone: ${user.phone}`,                                                                                                                                                                                                                                                                                                                                    
     };
 
     transporter.sendMail(mailOptions, (err, info) => {
