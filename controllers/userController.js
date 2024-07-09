@@ -5,35 +5,6 @@ const emailConfig = require("../config/emailConfig");
 // Nodemailer setup
 const transporter = nodemailer.createTransport(emailConfig);
 
-// exports.queryrecord=async(req,res)=>{
-//   const id=req.params.id
-//   const filepath=req.file.path
-//   const{emailto,emailfrom,subject,body,attachment}=req.body
-//   let transporter = nodemailer.createTransport({
-//       host: "smtp.gmail.com",
-//       port: 587,
-//       secure: false, // true for 465, false for other ports
-//       auth: {
-//         user: 'pks637700@gmail.com', // generated ethereal user
-//         pass: 'zllgtmaiotxmsesd', // generated ethereal password
-//       },
-//     });
-//     console.log('connected to SMTP server')
-    
-//     let info = await transporter.sendMail({
-//       from:emailfrom, // sender address
-//       to:emailto, // list of receivers
-//       subject:subject, // Subject line
-//       text:body, // plain text body
-//       //html: "<b>Hello world?</b>", // html body
-//       attachment:[{path:filepath}]
-//     });
-//     console.log('email sent')
-//     await Query.findByIdAndUpdate(id,{status:'Replyed'})
-//     res.redirect('/admin/querymanage')
-  
-// }
-
 //GET
 exports.getDash = async (req, res) => {
   try {
@@ -48,6 +19,34 @@ exports.getDash = async (req, res) => {
 exports.getUserList = async (req, res) => {
   try {
     const users = await User.find();
+    res.render("userList", { users });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+};
+
+//Get/users/search
+// exports.searchUser = async (req, res) => {
+//   //TODO
+//   try {
+//     const searchText = req.params.search;
+//     const regex = new RegExp(searchText, "i");
+
+//     const users = await User.find({ username: { $regex: regex } });
+
+//     res.render("userList", { users });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+exports.searchUser = async (req, res) => {
+  try {
+    const searchText = req.query.search;
+    const regex = new RegExp(searchText, "i"); // 'i' flag for case-insensitive search
+
+    const users = await User.find({ name: { $regex: regex } });
     res.render("userList", { users });
   } catch (err) {
     console.error(err);
@@ -137,6 +136,7 @@ exports.updateUser = async (req, res) => {
 // GET /users/delete/:id
 exports.deleteUser = async (req, res) => {
   try {
+    
     const user = await User.findByIdAndDelete(req.params.id);
 
     // Send email notification
@@ -144,7 +144,7 @@ exports.deleteUser = async (req, res) => {
       from: emailConfig.from,
       to: user.email,
       subject: "User Deleted",
-      text: `Your user account has been deleted:\n\nName: ${user.name}\nEmail: ${user.email}\nPhone: ${user.phone}`,
+      text: `Your user account has been deleted:\n\nName: ${user.name}\nEmail: ${user.email}\nPhone: ${user.phone}`,                                                                                                                                                                                                                                                                                                                                    
     };
 
     transporter.sendMail(mailOptions, (err, info) => {
